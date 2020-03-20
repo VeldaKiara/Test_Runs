@@ -1,28 +1,66 @@
+import pyperclip
 class Contact:
     """classes generate new instances of contacts
     __init__ method allows us to define properties for our objects.
     methods have an extra variable added to the beginning of the variable i.e self.
     """
+    
     contact_list = [] 
     def __init__(self, first_name,last_name,phone_number,email):
         self.first_name = first_name
         self.last_name = last_name
         self.phone_number = phone_number
         self.email = email
+    
 # BDD of contacts
 #create new contacts with properties
 #save,display,delete and dispaly contacts
 
-def setUp(self):
-    self.new_contact = Contact("mary", "chuda", "0712345678", "jkim@co.ke")
     
-def test_init(self):
-    self.assertEqual(self.new_contact.first_name,"mary")
-    self.assertEqual(self.new_contact.last_name,"chuda")
-    self.assertEqual(self.new_contact.phone_number,"0712345678")
-    self.assertEqual(self.new_contact.email,"jkim@co.ke")
-    
-if __name__ ==  '__main__':
-    unittest.main()
+    def save_contact(self):
+        Contact.contact_list.append(self)    
+    def delete_contact(self):
         
-    
+        '''
+        delete_contact method deletes a saved contact from the contact_list
+        '''
+
+        Contact.contact_list.remove(self)  
+
+        
+    @classmethod
+    def find_by_number(cls,number):
+        '''
+        Method that takes in a number and returns a contact that matches that number.
+
+        Args:
+            number: Phone number to search for
+        Returns :
+            Contact of person that matches the number.
+        '''
+
+        for contact in cls.contact_list:
+            if contact.phone_number == number:
+                return contact
+    @classmethod
+    def contact_exist(cls,number):
+        '''
+        Method that checks if a contact exists from the contact list.
+        Args:
+            number: Phone number to search if it exists
+        Returns :
+            Boolean: True or false depending if the contact exists
+        '''
+        for contact in cls.contact_list:
+            if contact.phone_number == number:
+                    return True
+    @classmethod
+    def display_contacts(cls):
+        '''
+        method that returns the contact list
+        '''
+        return cls.contact_list
+    @classmethod
+    def copy_email(cls,number):
+        contact_found = Contact.find_by_number(number)
+        pyperclip.copy(contact_found.email)       
